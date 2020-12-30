@@ -12,6 +12,7 @@ repositories {
 dependencies {
     testImplementation(kotlin("test-junit"))
     testImplementation("com.google.truth:truth:1.1")
+    implementation("com.google.code.gson:gson:2.8.6")
 }
 
 tasks.test {
