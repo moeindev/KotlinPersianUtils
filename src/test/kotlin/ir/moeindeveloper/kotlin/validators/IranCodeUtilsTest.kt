@@ -4,6 +4,7 @@ import com.google.common.truth.Truth.assertThat
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.ValueSource
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -71,5 +72,24 @@ class IranCodeUtilsTest {
         fun `Invalid postal code`(code: String) {
             assertThat(IranCodeUtils.isValidPostalCode(code)).isFalse()
         }
+    }
+
+    @Nested
+    inner class CarrierTest {
+
+        @ParameterizedTest
+        @CsvSource(value = [
+            "09037850955,ایرانسل",
+            "+989188888821,همراه اول",
+            "00989318885544,اسپادان",
+            "989325554466,تالیا",
+            "9345559911, تله کیش",
+            "+989944555223,انارستان",
+            "989990045522,لوتوس تل",
+            "09357850955,ایرانسل"])
+        fun `carrier names`(number: String, carrier: String) {
+            assertThat(IranCodeUtils.getCarrierName(number)).isEqualTo(carrier)
+        }
+
     }
 }

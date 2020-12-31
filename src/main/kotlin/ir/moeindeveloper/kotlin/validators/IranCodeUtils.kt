@@ -1,5 +1,9 @@
 package ir.moeindeveloper.kotlin.validators
 
+import com.google.gson.Gson
+import ir.moeindeveloper.kotlin.model.Carrier
+import ir.moeindeveloper.kotlin.model.Carriers
+
 
 object IranCodeUtils {
     private val iranianMobileNumber1: Regex = Regex("^(((98)|(\\+98)|(0098)|0)(9)[0-9]{9})+$",RegexOption.IGNORE_CASE)
@@ -45,5 +49,40 @@ object IranCodeUtils {
      */
     fun isValidPostalCode(code: String): Boolean = code.isNotBlank() && code.matches(iranianPostalCode)
 
+    private fun getCarriers(): List<Carrier>? {
+        this::class.java.classLoader.getResource("carrier.json")?.let { url->
+            val carriersJsonString = url.readText()
+            val carriers = Gson().fromJson(carriersJsonString,Carriers::class.java)
+            return carriers.carriers
+        }
+        return null
+    }
 
+
+    fun getCarrierName(number: String): String? {
+
+        if (!isPhoneNumber(number)) return null
+
+        if (!isValidIranianMobileNumber(number)) return number
+
+        var carrierName: String? = null
+
+        val carriers = getCarriers()
+
+        carriers?.let {
+            if (number.matches(iranianMobileNumber1)) {
+                carrierName = when(number.take(2)) {
+                    "+9" -> carriers.firstOrNull { it.international1 == number.take(it.international1.length) }?.carrierName
+                    "00" -> carriers.firstOrNull { it.international2 == number.take(it.international2.length) }?.carrierName
+                    "98" -> carriers.firstOrNull { it.international3 == number.take(it.international3.length) }?.carrierName
+                    "09" -> carriers.firstOrNull { it.local1 == number.take(it.local1.length) }?.carrierName
+                    else -> null
+                }
+            } else if (number.matches(iranianMobileNumber2)) {
+                carrierName = carriers.firstOrNull { it.local2 == number.take(it.local2.length) }?.carrierName
+            }
+        }
+
+        return carrierName
+    }
 }
