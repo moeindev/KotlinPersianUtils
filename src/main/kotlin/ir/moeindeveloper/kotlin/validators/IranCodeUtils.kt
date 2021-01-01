@@ -3,6 +3,8 @@ package ir.moeindeveloper.kotlin.validators
 import com.google.gson.Gson
 import ir.moeindeveloper.kotlin.model.Carrier
 import ir.moeindeveloper.kotlin.model.Carriers
+import ir.moeindeveloper.kotlin.model.Landline
+import ir.moeindeveloper.kotlin.model.Landlines
 
 
 object IranCodeUtils {
@@ -63,7 +65,7 @@ object IranCodeUtils {
 
         if (!isPhoneNumber(number)) return null
 
-        if (!isValidIranianMobileNumber(number)) return number
+        if (!isValidIranianMobileNumber(number)) return null
 
         var carrierName: String? = null
 
@@ -84,5 +86,33 @@ object IranCodeUtils {
         }
 
         return carrierName
+    }
+
+    private fun getLandlines(): List<Landline>? {
+        this::class.java.classLoader.getResource("landline.json")?.let { url->
+            val landlinesJsonString = url.readText()
+            val landlines = Gson().fromJson(landlinesJsonString, Landlines::class.java)
+            return landlines.landlines
+        }
+        return null
+    }
+
+    fun getProvinceName(number: String): String? {
+
+        if (!isPhoneNumber(number)) return null
+
+        if (!isValidIranianPhoneNumber(number)) return null
+
+        var provinceName: String? = null
+
+        val landlines = getLandlines()
+
+        landlines?.let { list ->
+            if (number.matches(iranianPhoneNumber2)) {
+                provinceName = list.firstOrNull { it.code == number.take(it.code.length) }?.province
+            }
+        }
+
+        return provinceName
     }
 }

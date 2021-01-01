@@ -87,9 +87,21 @@ class IranCodeUtilsTest {
             "+989944555223,انارستان",
             "989990045522,لوتوس تل",
             "09357850955,ایرانسل"])
-        fun `carrier names`(number: String, carrier: String) {
+        fun `carrier name`(number: String, carrier: String) {
             assertThat(IranCodeUtils.getCarrierName(number)).isEqualTo(carrier)
         }
 
+    }
+
+    @Nested
+    inner class ProvinceTest {
+        @ParameterizedTest
+        @CsvSource(value = [
+            "08334223335,استان کرمانشاه",
+            "02166663333,استان تهران"
+        ])
+        fun `province Name`(number: String, province: String) {
+
+        }
     }
 }
