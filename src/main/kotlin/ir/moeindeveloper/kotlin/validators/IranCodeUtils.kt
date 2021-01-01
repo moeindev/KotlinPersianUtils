@@ -107,6 +107,7 @@ object IranCodeUtils {
 
         val landlines = getLandlines()
 
+        print(landlines)
         landlines?.let { list ->
             if (number.matches(iranianPhoneNumber2)) {
                 provinceName = list.firstOrNull { it.code == number.take(it.code.length) }?.province

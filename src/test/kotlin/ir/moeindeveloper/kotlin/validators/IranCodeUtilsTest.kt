@@ -101,7 +101,7 @@ class IranCodeUtilsTest {
             "02166663333,استان تهران"
         ])
         fun `province Name`(number: String, province: String) {
-
+            assertThat(IranCodeUtils.getProvinceName(number)).isEqualTo(province)
         }
     }
 }
