@@ -6,7 +6,10 @@ import ir.moeindeveloper.kotlin.model.Carriers
 import ir.moeindeveloper.kotlin.model.Landline
 import ir.moeindeveloper.kotlin.model.Landlines
 
-
+/**
+ * Containing utils for iranian Phone numbers and postal code
+ * @author MoeinDeveloper
+ */
 object IranCodeUtils {
     private val iranianMobileNumber1: Regex = Regex("^(((98)|(\\+98)|(0098)|0)(9)[0-9]{9})+$",RegexOption.IGNORE_CASE)
     private val iranianMobileNumber2: Regex = Regex("^(9)[0-9]{9}$",RegexOption.IGNORE_CASE)
