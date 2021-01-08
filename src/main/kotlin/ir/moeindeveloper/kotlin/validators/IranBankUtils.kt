@@ -1,5 +1,7 @@
 package ir.moeindeveloper.kotlin.validators
 
+import ir.moeindeveloper.kotlin.extensions.strings.isBlank
+
 /**
  * This Object is containing all the Iranian bank utils
  */
@@ -11,7 +13,7 @@ object IranBankUtils {
         if (iban.isBlank()) {
             return false
         }
-        if (iban.length < 4 || iban[0] == ' ' || iban[1] == ' ' || iban[2] == ' ' || iban[3] == ' ') {
+        if (iban.length < 4 || iban[0].isBlank() || iban[1].isBlank() || iban[2].isBlank()|| iban[3].isBlank()) {
             return false
         }
         if (iban.length != 26) {
@@ -23,7 +25,7 @@ object IranBankUtils {
         var checksum = 0
         val ibanLength = iban.length
         for (charIndex in 0 until ibanLength) {
-            if (iban[charIndex] == ' ') {
+            if (iban[charIndex].isBlank()) {
                 continue
             }
             var value: Int
