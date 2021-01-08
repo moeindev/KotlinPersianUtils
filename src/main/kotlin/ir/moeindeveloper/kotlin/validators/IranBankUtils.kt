@@ -9,6 +9,13 @@ object IranBankUtils {
 
     private val ibanRegex: Regex = Regex("IR[0-9]{24}",RegexOption.IGNORE_CASE)
 
+    /**
+     * Validate IBAN(Sheba) number
+     * @param iban Sheba number
+     * @return Boolean
+     *
+     * @author moeinDeveloper
+     */
     fun isValidIBAN(iban: String): Boolean {
         if (iban.isBlank()) {
             return false
