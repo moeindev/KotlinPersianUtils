@@ -24,10 +24,8 @@ object IranBankUtils {
         }
         var checksum = 0
         val ibanLength = iban.length
-        for (charIndex in 0 until ibanLength) {
-            if (iban[charIndex].isBlank()) {
-                continue
-            }
+        iban.forEachIndexed{charIndex, _ ->
+            if (iban[charIndex].isBlank()) return@forEachIndexed
             var value: Int
             when (val c = iban[(charIndex + 4) % ibanLength]) {
                 in '0'..'9' -> {
