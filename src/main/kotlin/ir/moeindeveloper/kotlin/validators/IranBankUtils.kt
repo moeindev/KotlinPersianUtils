@@ -1,13 +1,15 @@
 package ir.moeindeveloper.kotlin.validators
 
 import ir.moeindeveloper.kotlin.extensions.strings.isBlank
-
+import ir.moeindeveloper.kotlin.extensions.strings.empty
 /**
  * This Object is containing all the Iranian bank utils
  */
 object IranBankUtils {
 
     private val ibanRegex: Regex = Regex("IR[0-9]{24}",RegexOption.IGNORE_CASE)
+
+    private val shetabRegex: Regex = Regex("[0-9]{16}",RegexOption.IGNORE_CASE)
 
     /**
      * Validate IBAN(Sheba) number
@@ -57,7 +59,35 @@ object IranBankUtils {
         return checksum == 1
     }
 
-    //TODO validate credit card numbers
+    /**
+     * Validate iranian shetab number
+     *
+     * @param creditCardNumber String Credit card number
+     * @return Boolean
+     *
+     * @author MoeinDeveloper
+     */
+    fun isValidShetabNumber(creditCardNumber: String): Boolean {
+        var cardNumber = creditCardNumber
+        if (cardNumber.isBlank()) {
+            return false
+        }
+        cardNumber = cardNumber.replace("-", String.empty()).replace(" ", String.empty())
+        if (cardNumber.length != 16) {
+            return false
+        }
+        if (!cardNumber.matches(shetabRegex)) {
+            return false
+        }
+        var sumOfDigits = 0
+        var result: Int
+        for (i in 1..cardNumber.length) {
+            val number = (cardNumber[i - 1].toString() + String.empty()).toInt()
+            result = (number * (if (i % 2 == 0) 1 else 2))
+            sumOfDigits += if(result > 9) result - 9 else result
+        }
+        return sumOfDigits % 10 == 0
+    }
 
     //TODO get credit card info based on number
 

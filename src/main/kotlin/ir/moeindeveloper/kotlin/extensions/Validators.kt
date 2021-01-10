@@ -1,5 +1,6 @@
 package ir.moeindeveloper.kotlin.extensions
 
+import ir.moeindeveloper.kotlin.validators.IranBankUtils
 import ir.moeindeveloper.kotlin.validators.IranCodeUtils
 
 
@@ -32,3 +33,11 @@ fun String.carrierName(): String? = IranCodeUtils.getCarrierName(this)
  * get the province name based on the provided phone number
  */
 fun String.phoneProvince(): String? = IranCodeUtils.getProvinceName(this)
+
+/**
+ * checks if the given string is a valid sheba number
+ */
+fun String.isValidShebaNumber(): Boolean = IranBankUtils.isValidIBAN(this)
+
+
+fun String.isValidShetabNumber(): Boolean = IranBankUtils.isValidShetabNumber(this)
