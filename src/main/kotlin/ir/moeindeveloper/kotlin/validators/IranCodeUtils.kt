@@ -63,7 +63,11 @@ object IranCodeUtils {
         return null
     }
 
-
+    /**
+     * Get carrier name based on the given number
+     * @param number String number
+     * @return String?
+     */
     fun getCarrierName(number: String): String? {
 
         if (!isPhoneNumber(number)) return null
@@ -100,6 +104,10 @@ object IranCodeUtils {
         return null
     }
 
+    /**
+     * Get province name based on the given landline number
+     * @param number String landline number
+     */
     fun getProvinceName(number: String): String? {
 
         if (!isPhoneNumber(number)) return null
