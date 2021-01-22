@@ -45,4 +45,36 @@ class IranNationalUtilsTest {
             assertThat(IranNationalUtils.isValidNationalCode(code)).isFalse()
         }
     }
+
+    @Nested
+    inner class NationalLegalCodeTest {
+
+        @ParameterizedTest
+        @ValueSource(strings = [
+            "00103508290",
+            "10101780644",
+            "10101780644",
+            "10860953980",
+            "10340046788",
+            "10480020857",
+        ])
+        fun `Valid Iranian national legal code`(code: String) {
+            assertThat(IranNationalUtils.isValidNationalLegalNumber(code)).isTrue()
+        }
+
+
+        @ParameterizedTest
+        @ValueSource(strings = [
+            " 10480020857  ",
+            "0254",
+            "14006876134",
+            "c25da28w45fa",
+            "10740086430",
+            "11111111211",
+            "10320876496"
+        ])
+        fun `Invalid Iranian national legal code`(code: String) {
+            assertThat(IranNationalUtils.isValidNationalLegalNumber(code)).isFalse()
+        }
+    }
 }
