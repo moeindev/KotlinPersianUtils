@@ -2,6 +2,7 @@ package ir.moeindeveloper.kotlin.extensions
 
 import ir.moeindeveloper.kotlin.validators.IranBankUtils
 import ir.moeindeveloper.kotlin.validators.IranCodeUtils
+import ir.moeindeveloper.kotlin.validators.IranNationalUtils
 
 
 /**
@@ -39,5 +40,17 @@ fun String.phoneProvince(): String? = IranCodeUtils.getProvinceName(this)
  */
 fun String.isValidShebaNumber(): Boolean = IranBankUtils.isValidIBAN(this)
 
-
+/**
+ * Checks if the given string is a valid shetab number
+ */
 fun String.isValidShetabNumber(): Boolean = IranBankUtils.isValidShetabNumber(this)
+
+/**
+ * Checks if the given string is a valid Iranian national code
+ */
+fun String.isValidNationalCode(): Boolean = IranNationalUtils.isValidNationalCode(this)
+
+/**
+ * Checks if the given String is a valid Iranian national legal code
+ */
+fun String.isValidNationalLegalCode(): Boolean = IranNationalUtils.isValidNationalLegalNumber(this)
